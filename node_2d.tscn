@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxv3b117ylbgs"]
+
+[ext_resource type="Texture2D" uid="uid://daswtlaqkeyhq" path="res://icon.svg" id="1_n85py"]
+[ext_resource type="PackedScene" uid="uid://cmchila3jwaps" path="res://projectile.tscn" id="2_0yyyk"]
+[ext_resource type="Script" path="res://GameController.gd" id="2_gmpyk"]
+[ext_resource type="Script" path="res://GenericEnemy.gd" id="3_5n4gn"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(609, 224)
+script = ExtResource("2_gmpyk")
+projectile = ExtResource("2_0yyyk")
+metadata/_edit_group_ = true
+metadata/bullet = true
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/Area2D"]
+polygon = PackedVector2Array(64, -61.1, 64, 59, 59.6, 64, -60.2, 64, -64, 61, -64, 58, -64, -59, -59, -63.8, 59.2, -64)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/Area2D"]
+texture = ExtResource("1_n85py")
+
+[node name="GenericEnemy" type="Node2D" parent="."]
+position = Vector2(609, 376)
+script = ExtResource("3_5n4gn")
+
+[node name="SomeStuff" type="Area2D" parent="GenericEnemy"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GenericEnemy/SomeStuff"]
+position = Vector2(1.2, 0)
+scale = Vector2(0.988281, 1)
+polygon = PackedVector2Array(64, -61.1, 64, 59, 59.6, 64, -60.2, 64, -64, 61, -64, 58, -64, -59, -59, -63.8, 59.2, -64)
+
+[node name="Sprite2D" type="Sprite2D" parent="GenericEnemy/SomeStuff"]
+texture = ExtResource("1_n85py")
+
+[connection signal="area_entered" from="GenericEnemy/SomeStuff" to="GenericEnemy" method="_on_some_stuff_area_entered"]
+[connection signal="body_entered" from="GenericEnemy/SomeStuff" to="GenericEnemy" method="_on_some_stuff_body_entered"]
